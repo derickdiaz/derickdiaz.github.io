@@ -1,5 +1,23 @@
 <script>
-    import NavBar from "../lib/NavBar.svelte";
+    import { onMount } from 'svelte';
+    const weekday = ["SUN","MON","TUE","WED","THU","FRI","SAT"];
+    let time = new Date();
+    $: hours = getHours(time); 
+
+    const getHours = (date) => {
+        let temp = date.getHours()
+        if (temp > 12) {
+            return temp - 12
+        }
+        return temp
+    }
+
+    onMount(() => {
+        const interval = setInterval(() => {
+            time = new Date();
+        }, 1000)
+
+    })
 
 </script>
 <main>
@@ -7,8 +25,9 @@
     <hr/>
     <div class="content-grid">
         <div class="content-item profile pad-10">
-            <div class="gray">
-                
+            <div style="text-align: right; padding: 30px;box-sizing:border-box" class="gray">
+                <p style="color: white;font-size: 1.5rem;"><span style="color: red">{weekday[time.getDay()]}</span> {time.getDate()}</p>
+                <p style="color: white;font-size: 3rem;">{hours}:{time.getMinutes()}</p>
             </div>
         </div>
         <div class="content-item info-grid">
