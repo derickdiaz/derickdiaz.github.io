@@ -12,8 +12,15 @@
         return temp
     }
 
+    const getMinutes = (date) => {
+        if (String(date.getMinutes()).length == 1) {
+            return `0${date.getMinutes()}`
+        }
+        return `${date.getMinutes()}`
+    }
+
     onMount(() => {
-        const interval = setInterval(() => {
+        setInterval(() => {
             time = new Date();
         }, 1000)
 
@@ -25,9 +32,17 @@
     <hr/>
     <div class="content-grid">
         <div class="content-item profile pad-10">
-            <div style="text-align: right; padding: 30px;box-sizing:border-box" class="gray">
-                <p style="color: white;font-size: 1.5rem;"><span style="color: red">{weekday[time.getDay()]}</span> {time.getDate()}</p>
-                <p style="color: white;font-size: 3rem;">{hours}:{time.getMinutes()}</p>
+            <div style="text-align: right; padding: 30px;box-sizing:border-box" class="gray top-watch">
+                <div class="moon">
+                    <div class="moon-light">
+                        <div class="moon-dark">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <p style="color: white;font-size: 1.5rem;"><span style="color: red">{weekday[time.getDay()]}</span> {time.getDate()}</p>
+                    <p style="color: white;font-size: 4rem;">{hours}:{getMinutes(time)}</p>
+                </div>
             </div>
         </div>
         <div class="content-item info-grid">
@@ -42,6 +57,34 @@
 </main>
 
 <style>
+    .top-watch {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .moon {
+        height: 100px;
+        width: 100px;
+    }
+
+    .moon-light {
+        background-color: white;
+        border-radius: 50%;
+        width: 100px;
+        height: 100%;
+        display: inline-block;
+    }
+
+    .moon-dark {
+        background-color: black;
+        z-index: 1;
+        width: 80px;
+        height: 80px;
+        right: 10px;
+        border-radius: 50%;
+        position: relative;
+    }
+
     h1 {
         color: white;
         font-size: 3rem;
